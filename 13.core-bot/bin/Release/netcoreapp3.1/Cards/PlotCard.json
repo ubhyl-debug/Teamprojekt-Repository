@@ -1,0 +1,109 @@
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "Medium",
+            "weight": "Bolder",
+            "text": "${title}",
+            "horizontalAlignment": "Center",
+            "fontType": "Default"
+        },
+        {
+            "type": "Image",
+            "url": "${url}"
+        },
+        {
+            "type": "Container",
+            "selectAction": {
+                "type": "Action.ToggleVisibility",
+                "targetElements": [
+                    "textualExplanation"
+                ]
+            },
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "text": "Show textual Explanation",
+                    "size": "Small",
+                    "horizontalAlignment": "Center",
+                    "color": "Accent"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "${textexpl}",
+                    "id": "textualExplanation",
+                    "horizontalAlignment": "Center",
+                    "isVisible": false,
+                    "wrap": true,
+                    "color": "Light",
+                    "weight": "Lighter",
+                    "size": "Small"
+                }
+            ],
+
+
+            "style": "emphasis"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "data": "more",
+                                    "iconUrl": "https://image.flaticon.com/icons/png/512/1479/1479648.png"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "data": "${save_data}",
+                                    "iconUrl": "https://pics.freeicons.io/uploads/icons/png/2725159511543238876-512.png"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {   "type": "Action.Submit",
+                                    "data" : "nextStep",
+                                    "iconUrl": "https://pics.freeicons.io/uploads/icons/png/15574942051535694868-512.png"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3"
+}
