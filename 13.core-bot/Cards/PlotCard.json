@@ -42,14 +42,15 @@
                     "horizontalAlignment": "Center",
                     "isVisible": false,
                     "wrap": true,
-                    "color": "Light",
+                    "color": "Dark",
                     "weight": "Lighter",
                     "size": "Small"
                 }
             ],
-
-
-            "style": "emphasis"
+            "backgroundImage": {
+                "horizontalAlignment": "Center"
+            },
+            "style": "default"
         },
         {
             "type": "ColumnSet",
@@ -62,8 +63,8 @@
                             "type": "ActionSet",
                             "actions": [
                                 {
-                                    "type": "Action.Submit",
-                                    "data": "more",
+                                    "type": "Action.ToggleVisibility",
+                                    "id": "textualExplanationShow",
                                     "iconUrl": "https://image.flaticon.com/icons/png/512/1479/1479648.png"
                                 }
                             ]
@@ -78,8 +79,7 @@
                             "type": "ActionSet",
                             "actions": [
                                 {
-                                    "type": "Action.Submit",
-                                    "data": "${save_data}",
+                                    "type": "Action.ToggleVisibility",
                                     "iconUrl": "https://pics.freeicons.io/uploads/icons/png/2725159511543238876-512.png"
                                 }
                             ]
@@ -93,8 +93,8 @@
                         {
                             "type": "ActionSet",
                             "actions": [
-                                {   "type": "Action.Submit",
-                                    "data" : "nextStep",
+                                {
+                                    "type": "Action.ToggleVisibility",
                                     "iconUrl": "https://pics.freeicons.io/uploads/icons/png/15574942051535694868-512.png"
                                 }
                             ]
