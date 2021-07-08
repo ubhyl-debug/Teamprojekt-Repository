@@ -13,6 +13,9 @@ using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
+using System.Text;
 
 //imports für Adaptive cards
 using AdaptiveCards.Templating;
@@ -21,7 +24,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-
+using System.Net;
 
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
@@ -65,8 +68,10 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
 
             // Create Adpative Card with Plot
-            var jsonData = (string) await client.GetStringAsync("https://49fa66626805.ngrok.io/explanation/featureimportance?count=10");
-            var jObject = JObject.Parse(jsonData);
+            //var jsonData = (string) await client.GetStringAsync("https://49fa66626805.ngrok.io/explanation/featureimportance?count=10");
+            //var jObject = JObject.Parse(jsonData);
+
+            var jObject = await BOT_Api.getJson("/explanation/featureimportance?count=10");
 
             var templateJson="";
             using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
@@ -118,23 +123,31 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
         private async Task<DialogTurnResult> DestinationStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var bookingDetails = (BookingDetails)stepContext.Options;
+        
+            var jContext = JObject.Parse((string)stepContext.Result);
+            var actionType = (string) jContext["action"];
 
-            if (bookingDetails.Destination == null)
-            {
-                var promptMessage = MessageFactory.Text(DestinationStepMsgText, DestinationStepMsgText, InputHints.ExpectingInput);
-                //Console.WriteLine("Making API-Call....");
-                using var client = new HttpClient();
-                var content = (string) await client.GetStringAsync("http://127.0.0.1:8085/explanation/booking?id=76189");
-                var jObject = JObject.Parse(content);
-                //Console.WriteLine(content);
-                string output = (string)jObject["booking"][0]["booking_normal"]["prediction_proba"];
-                output = "I predicted " + output + " probability of cancellation";
-                promptMessage = MessageFactory.Text(output, DestinationStepMsgText, InputHints.ExpectingInput);
-                return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+            if (actionType == "SAVE") {
+                // Send a POST request to the backend
+                Dictionary<string,string> dict = new Dictionary<string, string>();
+                dict.Add("url",(string) jContext["url"] );
+                dict.Add("title",(string) jContext["title"] );
+                dict.Add("text",(string) jContext["text"] );
+                BOT_Api.saveToNotepad(dict);
+
+                await stepContext.Context.SendActivityAsync(
+                MessageFactory.Text("The explanation was successfully saved to your Notepad."));
             }
 
-            return await stepContext.NextAsync(bookingDetails.Destination, cancellationToken);
+            if (actionType=="NEXT")  {
+                return await stepContext.NextAsync("", cancellationToken);
+            }
+
+            if (actionType =="HELP") {
+
+            }
+
+            return await stepContext.NextAsync("", cancellationToken);
         }
 
         private async Task<DialogTurnResult> TestCardStepAsync (WaterfallStepContext stepContext, CancellationToken cancellationToken)

@@ -1,0 +1,23 @@
+﻿{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.3",
+  "body": [
+      {
+          "type": "Image",
+          "url": "https://freesvg.org/img/1538298822.png",
+          "size": "Medium",
+          "width": "64px"
+      },
+      {
+          "type": "TextBlock",
+          "wrap": true,
+          "text": "Hey! Welcome to Chatbot Hannes",
+          "horizontalAlignment": "Center",
+          "fontType": "Default",
+          "size": "ExtraLarge",
+          "weight": "Bolder",
+          "color": "Dark"
+      }
+  ]
+}

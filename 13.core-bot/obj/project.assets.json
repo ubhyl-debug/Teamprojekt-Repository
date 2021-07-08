@@ -7525,11 +7525,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Felix 1\\source\\repos\\BotBuilder-Samples\\samples\\csharp_dotnetcore\\13.core-bot\\CoreBot.csproj",
+      "projectUniqueName": "C:\\Users\\Felix 1\\Documents\\GitHub\\Teamprojekt-Repository\\13.core-bot\\CoreBot.csproj",
       "projectName": "CoreBot",
-      "projectPath": "C:\\Users\\Felix 1\\source\\repos\\BotBuilder-Samples\\samples\\csharp_dotnetcore\\13.core-bot\\CoreBot.csproj",
+      "projectPath": "C:\\Users\\Felix 1\\Documents\\GitHub\\Teamprojekt-Repository\\13.core-bot\\CoreBot.csproj",
       "packagesPath": "C:\\Users\\Felix 1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Felix 1\\source\\repos\\BotBuilder-Samples\\samples\\csharp_dotnetcore\\13.core-bot\\obj\\",
+      "outputPath": "C:\\Users\\Felix 1\\Documents\\GitHub\\Teamprojekt-Repository\\13.core-bot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Felix 1\\AppData\\Roaming\\NuGet\\NuGet.Config",
