@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NBAFuHq4MIIKBeiwwyLj1VxJPrhkC3pCjCJM5PEUNengDNvJgfhPNZDV2/hPQb7970Z4IV4cF5rkxtjiLyfw8g==",
+  "dgSpecHash": "PBYgn+FdkP3dL3yOJakWaFIhSYGBwfsxqsrxHFIJD4WbQgwwc48eRYFh9j9Lza+1R/YsDVhwEposVriauR+6gA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Felix 1\\source\\repos\\BotBuilder-Samples\\samples\\csharp_dotnetcore\\13.core-bot\\CoreBot.csproj",
+  "projectFilePath": "C:\\Users\\Felix 1\\Documents\\GitHub\\Teamprojekt-Repository\\13.core-bot\\CoreBot.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Felix 1\\.nuget\\packages\\adaptivecards.templating\\1.2.1\\adaptivecards.templating.1.2.1.nupkg.sha512",
     "C:\\Users\\Felix 1\\.nuget\\packages\\adaptiveexpressions\\4.13.2\\adaptiveexpressions.4.13.2.nupkg.sha512",
