@@ -20,7 +20,7 @@ using Newtonsoft.Json;
 public class BOT_Api
 {
     public static HttpClient client = new HttpClient();
-    public static string ngrokendpoint = "https://250773b6e3cc.ngrok.io";
+    public static string ngrokendpoint = "https://72f8d20d283a.ngrok.io";
 
     public static async Task<JObject> getJson (string route)
     {       
@@ -42,6 +42,7 @@ public class BOT_Api
         foreach( KeyValuePair<string, string> kvp in dict )
         {
             data = data + "&" + kvp.Key + "=" + kvp.Value;
+            Console.WriteLine(data);
         }
 
         using (var streamWriter = new StreamWriter(httpRequest.GetRequestStream()))
