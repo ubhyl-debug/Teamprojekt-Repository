@@ -26,15 +26,11 @@ using System.Net;
 
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
-    public class FeatureImportanceDialog : CancelAndHelpDialog
+    public class LocalWaterfallExplDialog : CancelAndHelpDialog
     {
-        private const string DestinationStepMsgText = "";
-        private const string OriginStepMsgText = "";
-        private HttpClient client =new HttpClient();
 
-
-        public FeatureImportanceDialog()
-            : base(nameof(FeatureImportanceDialog))
+        public LocalWaterfallExplDialog()
+            : base(nameof(LocalWaterfallExplDialog))
         {   
               // Add named dialogs to the DialogSet. These names are saved in the dialog state.
             AddDialog(new TextPrompt(nameof(TextPrompt)));
@@ -42,7 +38,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(new DateResolverDialog());
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {   
-                ShowFeatureImportanceAsync,
+                ShowPlotAsync,
                 SelectedActionStepAsync,
                 FinalStepAsync,
             }));
@@ -51,19 +47,16 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             InitialDialogId = nameof(WaterfallDialog);
         }
 
-        private async Task<DialogTurnResult> ShowFeatureImportanceAsync (WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        private async Task<DialogTurnResult> ShowPlotAsync (WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             if (stepContext.Options == "unexperienced") {
                 await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("The feature importance plot can give useful information about which features are considered most important to predict the ouput of the model. This helps to understand if the model is based on important features in the business context.", inputHint: InputHints.IgnoringInput), cancellationToken);
+                MessageFactory.Text("Erklärung was ist Lokal was ist Waterfall", inputHint: InputHints.IgnoringInput), cancellationToken);
             }
 
+            var jObject = await BOT_Api.getJson("/explanation/local/waterfall?id=70100");
 
-            // Create Adpative Card with Plot
-            //var jsonData = (string) await client.GetStringAsync("https://49fa66626805.ngrok.io/explanation/featureimportance?count=10");
-            //var jObject = JObject.Parse(jsonData);
-
-            var jObject = await BOT_Api.getJson("/explanation/featureimportance?count=10");
+            Console.WriteLine("*****************************************WATERFALLPLOT" + (string)jObject["url"]);
 
             var templateJson="";
             using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
@@ -80,10 +73,10 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             var myData = new
             {
 
-                Title= "Feature Importance Plot ",
+                Title= "Waterfall",
                 Url= (string) jObject["url"],
-                Save_data = "Feature importance plot",
-                Textexpl = "Ordered after the highest mean SHAP-Value (doesn't matter if negative or positive). The mean SHAP-Value is calculated by summing up all observations and dividing by the count of observations."
+                Save_data = "Waterfall",
+                Textexpl = "The plot shows ....."
 
             };
 
@@ -169,14 +162,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
                 return await stepContext.EndDialogAsync(null,cancellationToken);
         }
-
-        private static bool IsAmbiguous(string timex)
-        {
-            var timexProperty = new TimexProperty(timex);
-            return !timexProperty.Types.Contains(Constants.TimexTypes.Definite);
-        }
-
-
 
     }
 }

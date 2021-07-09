@@ -42,14 +42,13 @@
                     "horizontalAlignment": "Center",
                     "isVisible": false,
                     "wrap": true,
-                    "color": "Light",
+                    "color": "Dark",
                     "weight": "Lighter",
                     "size": "Small"
                 }
             ],
-
-
-            "style": "emphasis"
+            
+            "style": "default"
         },
         {
             "type": "ColumnSet",
@@ -63,7 +62,8 @@
                             "actions": [
                                 {
                                     "type": "Action.Submit",
-                                    "data": "more",
+                                    "data": {"save": "${title}",
+                                            "action": "HELP"},
                                     "iconUrl": "https://image.flaticon.com/icons/png/512/1479/1479648.png"
                                 }
                             ]
@@ -79,7 +79,12 @@
                             "actions": [
                                 {
                                     "type": "Action.Submit",
-                                    "data": "${save_data}",
+                                    "data": {
+                                        "action": "SAVE",
+                                        "title": "${title}",
+                                        "text": "${textexpl}",
+                                        "url": "${url}"
+                                    },
                                     "iconUrl": "https://pics.freeicons.io/uploads/icons/png/2725159511543238876-512.png"
                                 }
                             ]
@@ -93,8 +98,11 @@
                         {
                             "type": "ActionSet",
                             "actions": [
-                                {   "type": "Action.Submit",
-                                    "data" : "nextStep",
+                                {
+                                    "type": "Action.Submit",
+                                    "data": {
+                                        "action": "NEXT"
+                                    },
                                     "iconUrl": "https://pics.freeicons.io/uploads/icons/png/15574942051535694868-512.png"
                                 }
                             ]
