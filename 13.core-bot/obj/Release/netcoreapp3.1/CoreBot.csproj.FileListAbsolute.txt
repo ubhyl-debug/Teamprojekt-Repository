@@ -140,3 +140,6 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Release
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Release\netcoreapp3.1\CoreBot.RazorTargetAssemblyInfo.cache
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Release\netcoreapp3.1\CoreBot.csproj.CopyComplete
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Release\netcoreapp3.1\CoreBot.genruntimeconfig.cache
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\ConditionalCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\WhatIfCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\WhatIfCard_old.json

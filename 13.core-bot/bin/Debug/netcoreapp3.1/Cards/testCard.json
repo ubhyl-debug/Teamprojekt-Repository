@@ -1,0 +1,32 @@
+{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "Medium",
+            "weight": "Bolder",
+            "text": "${title}"
+        },
+        {
+            "type": "Image",
+            "url": "${url}"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "data": "${save_data}",
+                    "associatedInputs": "auto",
+                    "iconUrl": "https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png",
+                    "title": "Save"
+                }
+            ],
+            "spacing": "Small",
+            "height": "stretch",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3"
+}

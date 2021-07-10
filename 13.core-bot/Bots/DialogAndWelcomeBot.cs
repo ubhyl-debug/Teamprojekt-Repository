@@ -82,14 +82,6 @@ namespace Microsoft.BotBuilderSamples.Bots
                 }
             }
         }
-        private async Task<string> fetchData()
-            {
-             using var client = new HttpClient();
-                var content = (string) await client.GetStringAsync("http://127.0.0.1:8085/explanation/booking?id=76189");
-                var jObject = JArray.Parse(content);
-                //Console.WriteLine(content);
-                string output = (string)jObject[0]["booking"]["index"];
-                return output;
-            }
+      
     }
 }

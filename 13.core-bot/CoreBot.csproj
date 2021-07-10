@@ -13,6 +13,9 @@
     <EmbeddedResource Include="Cards\welcomeCard_new.json" />
     <EmbeddedResource Include="Cards\testCard.json" />
     <EmbeddedResource Include="Cards\PlotCard.json" />
+    <EmbeddedResource Include="Cards\ConditionalCard.json" />
+    <EmbeddedResource Include="Cards\WhatIfCard.json" />
+    <EmbeddedResource Include="Cards\PredictionCard.json" />
   </ItemGroup>
 
   <ItemGroup>

@@ -43,6 +43,9 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<DirectionOfInfluenceNumDialog>();
             services.AddSingleton<DirectionOfInfluenceCatDialog>();
             services.AddSingleton<LocalWaterfallExplDialog>();
+            services.AddSingleton<ConditionalShapDialog>();
+            services.AddSingleton<WhatIfDialog>();
+
             // The MainDialog that will be run by the bot.
             services.AddSingleton<MainDialog>();
 

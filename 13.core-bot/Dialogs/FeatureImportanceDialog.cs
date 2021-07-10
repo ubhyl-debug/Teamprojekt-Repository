@@ -142,25 +142,27 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 await stepContext.Context.SendActivityAsync(MessageFactory.Text("The ten most important features are:"), cancellationToken);
                 var jObject = await BOT_Api.getJson("/explanation/featureimportance?count=10"); // JObject.Parse(content1);
               
-                while (counter < 10)
+                while (counter < 5)
 
                 {
 
-
                     Console.WriteLine(jObject["values"]);
-                    var output1 = jObject["values"][counter];
+                    var output1 = (string)jObject["values"][counter];
 
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Text((counter + 1) + ". " + output1));
-
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Text(output1));
+                    
                     counter++;
 
                 }
-                return await stepContext.NextAsync("Ende der HELP", cancellationToken);
+                
             }
 
             return await stepContext.NextAsync("", cancellationToken);
         }
- 
+
+
+
+
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             if (stepContext.Options == "unexperienced") {

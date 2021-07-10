@@ -58,5 +58,30 @@ public class BOT_Api
 
         Console.WriteLine(httpResponse.StatusCode);
     }
+    
 
+    public static JObject jsonPostRequest(String jsonString, String route) {
+        var httpWebRequest = (HttpWebRequest)WebRequest.Create(ngrokendpoint + route);
+        httpWebRequest.ContentType = "application/json";
+        httpWebRequest.Method = "POST";
+
+        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+        {
+            string json =  jsonString;
+            //"{\"user\":\"test\"," +
+             //     "\"password\":\"bla\"}";
+                streamWriter.Write(json);
+        }
+
+        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        {
+            var result = streamReader.ReadToEnd();
+            return JObject.Parse(result);
+        }
+
+        
+    }
+
+ 
 }

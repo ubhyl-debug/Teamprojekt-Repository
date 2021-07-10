@@ -155,7 +155,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             if (stepContext.Options == "unexperienced") {
-                return await stepContext.BeginDialogAsync(nameof(LocalWaterfallExplDialog),stepContext.Options, cancellationToken);
+                return await stepContext.BeginDialogAsync(nameof(ConditionalShapDialog),stepContext.Options, cancellationToken);
             }
 
                 return await stepContext.EndDialogAsync(null,cancellationToken);
