@@ -20,7 +20,7 @@ using Newtonsoft.Json;
 public class BOT_Api
 {
     public static HttpClient client = new HttpClient();
-    public static string ngrokendpoint = "https://72f8d20d283a.ngrok.io";
+    public static string ngrokendpoint = "https://782693cd993f.ngrok.io";
 
     public static async Task<JObject> getJson (string route)
     {       

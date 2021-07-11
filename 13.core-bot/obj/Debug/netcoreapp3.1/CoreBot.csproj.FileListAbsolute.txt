@@ -48,9 +48,12 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\n
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Rest.ClientRuntime.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.pdb
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\ConditionalCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\PlotCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\PredictionCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\SimilarBookingsCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\testCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\welcomeCard_new.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\WhatIfCard.json
@@ -65,7 +68,6 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\n
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.deps.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.runtimeconfig.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.runtimeconfig.dev.json
-C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.pdb
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Azure.CognitiveServices.Language.LUIS.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Bot.Builder.Dialogs.Declarative.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Bot.Configuration.dll
@@ -97,4 +99,3 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Debug\n
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Debug\netcoreapp3.1\CoreBot.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Debug\netcoreapp3.1\CoreBot.pdb
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\obj\Debug\netcoreapp3.1\CoreBot.genruntimeconfig.cache
-C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\PredictionCard.json

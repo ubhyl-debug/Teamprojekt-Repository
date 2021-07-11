@@ -16,6 +16,7 @@
     <EmbeddedResource Include="Cards\ConditionalCard.json" />
     <EmbeddedResource Include="Cards\WhatIfCard.json" />
     <EmbeddedResource Include="Cards\PredictionCard.json" />
+     <EmbeddedResource Include="Cards\SimilarBookingsCard.json" />
   </ItemGroup>
 
   <ItemGroup>

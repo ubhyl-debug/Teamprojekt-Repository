@@ -111,14 +111,22 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         {
             var jObject1 = BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/whatif");
 
-    
-
             //Send prediction card
             var myData1 = new
             {
                 prediction=(string)jObject1["prediction"],
                 higher= (Boolean) jObject1["higher"],
-                difference="Difference of " + (string) jObject1["difference"]
+                difference="Difference:  " + (string) jObject1["difference"],
+                deposit_type = (string) jObject1["booking"]["deposit_type"],
+                agent=(string) jObject1["booking"]["agent"],
+                country =(string) jObject1["booking"]["country"],
+                special_requests =(string) jObject1["booking"]["total_of_special_requests"],
+                lead_time=(string) jObject1["booking"]["lead_time"],
+                customer_type=(string) jObject1["booking"]["customer_type"],
+                parking_space=(string) jObject1["booking"]["required_car_parking_spaces"],
+                previous_cancellations=(string) jObject1["booking"]["previous_cancellations"],
+                arrival_date_week_number=(string) jObject1["booking"]["arrival_date_week_number"],
+                booking_changes=(string) jObject1["booking"]["booking_changes"],
             };
             var cardAttachment1 = c1.getCardAttachment(myData1, "CoreBot.Cards.PredictionCard.json");
             await stepContext.Context.SendActivityAsync(

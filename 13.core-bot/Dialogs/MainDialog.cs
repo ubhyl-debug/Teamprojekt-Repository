@@ -28,7 +28,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         // Dependency injection uses this constructor to instantiate MainDialog
         public MainDialog(FlightBookingRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
         DirectionOfInfluenceCatDialog directionOfInfluenceCatDialog, LocalWaterfallExplDialog localWaterfallExplDialog, ILogger<MainDialog> logger, 
-        ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog)
+        ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
@@ -43,6 +43,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(localWaterfallExplDialog);
             AddDialog(conditionalShapDialog);
             AddDialog(whatIfDialog);
+            AddDialog(similarBookingsDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 IntroStepAsync,
@@ -66,6 +67,12 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                     MessageFactory.Text("NOTE: LUIS is not configured. To enable all capabilities, add 'LuisAppId', 'LuisAPIKey' and 'LuisAPIHostName' to the appsettings.json file.", inputHint: InputHints.IgnoringInput), cancellationToken);
 
                 return await stepContext.NextAsync(null, cancellationToken);
+            }
+
+            if(_luisRecognizer.IsConfigured)
+            {
+                await stepContext.Context.SendActivityAsync(
+                    MessageFactory.Text("LUIS FUNKTIONIERT ", inputHint: InputHints.IgnoringInput), cancellationToken);
             }
 
             // Use the text provided in FinalStepAsync or the default if it is the first time.
