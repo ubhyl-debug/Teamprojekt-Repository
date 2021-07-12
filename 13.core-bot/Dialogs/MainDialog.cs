@@ -21,12 +21,12 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 {
     public class MainDialog : ComponentDialog
     {
-        private readonly FlightBookingRecognizer _luisRecognizer;
+        private readonly LuisXaiRecognizer _luisRecognizer;
         protected readonly ILogger Logger;
         public HttpClient client;
 
         // Dependency injection uses this constructor to instantiate MainDialog
-        public MainDialog(FlightBookingRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
+        public MainDialog(LuisXaiRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
         DirectionOfInfluenceCatDialog directionOfInfluenceCatDialog, LocalWaterfallExplDialog localWaterfallExplDialog, ILogger<MainDialog> logger, 
         ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog)
             : base(nameof(MainDialog))
