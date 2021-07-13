@@ -59,10 +59,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             }
 
 
-            // Create Adpative Card with Plot
-            //var jsonData = (string) await client.GetStringAsync("https://49fa66626805.ngrok.io/explanation/featureimportance?count=10");
-            //var jObject = JObject.Parse(jsonData);
-
             var jObject = await BOT_Api.getJson("/explanation/similarbookings");
 
             var myData = new
@@ -75,8 +71,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             };
 
-            CardCreator c2 = new CardCreator();
-            var cardAttachment = c2.getCardAttachment(myData, "CoreBot.Cards.SimilarBookingsCard.json");
+            var cardAttachment = CardCreator.getCardAttachment(myData, "CoreBot.Cards.SimilarBookingsCard.json");
                 
             
             // Create the text prompt

@@ -131,7 +131,7 @@
                                                     "type": "Image",
                                                     "size": "Small",
                                                     "height": "20px",
-                                                    "$when": "${higher == false}",
+                                                    "$when": "${(higher == false)}",
                                                     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Green_Arrow_Down.svg/900px-Green_Arrow_Down.svg.png",
                                                     "horizontalAlignment": "Center"
                                                 }

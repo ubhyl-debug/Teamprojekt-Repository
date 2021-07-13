@@ -68,9 +68,7 @@ public class BOT_Api
         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
         {
             string json =  jsonString;
-            //"{\"user\":\"test\"," +
-             //     "\"password\":\"bla\"}";
-                streamWriter.Write(json);
+            streamWriter.Write(json);
         }
 
         var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();

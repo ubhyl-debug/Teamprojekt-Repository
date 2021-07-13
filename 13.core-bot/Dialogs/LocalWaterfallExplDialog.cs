@@ -51,24 +51,12 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         {
             if (stepContext.Options == "unexperienced") {
                 await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("Erklärung was ist Lokal was ist Waterfall", inputHint: InputHints.IgnoringInput), cancellationToken);
+                MessageFactory.Text("The last steps showed that the model itself makes sense. This was called the global interpretability. Next I want to explain why one specific booking receives the prediction according to its feature values. This is called the local interpretability. The waterfall plot is able to visualize this explanation. ", inputHint: InputHints.IgnoringInput), cancellationToken);
             }
 
             var jObject = await BOT_Api.getJson("/explanation/local/waterfall?id=70100");
 
             Console.WriteLine("*****************************************WATERFALLPLOT" + (string)jObject["url"]);
-
-            var templateJson="";
-            using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                     templateJson =  reader.ReadToEnd();
-                     reader.Close();
-                }
-            };
-
-            AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
 
             var myData = new
             {
@@ -80,14 +68,8 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             };
 
-            // "Expand" the template - this generates the final Adaptive Card payload
-            string cardJson = template.Expand(myData);
-
-            var cardAttachment = new Attachment()
-            {
-                ContentType = "application/vnd.microsoft.card.adaptive",
-                Content = JsonConvert.DeserializeObject(cardJson),
-            };
+            var cardAttachment = CardCreator.getCardAttachment(myData,"CoreBot.Cards.PlotCard.json");
+            
             // Create the text prompt
             var opts = new PromptOptions
             {   
@@ -114,12 +96,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             Console.WriteLine(jContext);
             if (actionType == "SAVE") {
                 // Send a POST request to the backend
-                Dictionary<string,string> dict = new Dictionary<string, string>();
-                dict.Add("url",(string) jContext["url"] );
-                dict.Add("title",(string) jContext["title"] );
-                dict.Add("text",(string) jContext["text"] );
-                BOT_Api.saveToNotepad(dict);
-
+                BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/saveNotepad");
                 await stepContext.Context.SendActivityAsync(
                 MessageFactory.Text("The explanation was successfully saved to your Notepad."));
             }
@@ -130,24 +107,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             if (actionType =="HELP") {
 
-                int counter = 0;
-
-                await stepContext.Context.SendActivityAsync(MessageFactory.Text("The ten most important features are:"), cancellationToken);
-                var jObject = await BOT_Api.getJson("/explanation/featureimportance?count=10"); // JObject.Parse(content1);
-              
-                while (counter < 10)
-
-                {
-
-
-                    Console.WriteLine(jObject["values"]);
-                    var output1 = jObject["values"][counter];
-
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Text((counter + 1) + ". " + output1));
-
-                    counter++;
-
-                }
                 return await stepContext.NextAsync("Ende der HELP", cancellationToken);
             }
 

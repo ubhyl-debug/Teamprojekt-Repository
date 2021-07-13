@@ -5,6 +5,7 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\ConditionalCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\PlotCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\PredictionCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\SelectFeaturesCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\SimilarBookingsCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\testCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Cards\welcomeCard_new.json
@@ -20,6 +21,7 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\CoreBot.deps.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\CoreBot.runtimeconfig.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\CoreBot.pdb
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\AdaptiveCards.Rendering.Wpf.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\AdaptiveCards.Templating.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\AdaptiveExpressions.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\publish\Antlr4.Runtime.Standard.dll

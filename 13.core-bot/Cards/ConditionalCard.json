@@ -84,12 +84,16 @@
                             "type": "Input.ChoiceSet",
                             "choices": [
                                 {
-                                    "title": "Choice 1",
-                                    "value": "Choice 1"
+                                    "title": "No Deposit",
+                                    "value": "No Deposit"
                                 },
                                 {
-                                    "title": "Choice 2",
-                                    "value": "Choice 2"
+                                    "title": "Non Refund",
+                                    "value": "Non Refund"
+                                },
+                                {
+                                    "title": "Refundable",
+                                    "value": "Refundable"
                                 }
                             ],
                             "placeholder": "Placeholder text",
@@ -105,12 +109,16 @@
                             "type": "Input.ChoiceSet",
                             "choices": [
                                 {
-                                    "title": "Choice 1",
-                                    "value": "Choice 1"
+                                    "title": "No Deposit",
+                                    "value": "No Deposit"
                                 },
                                 {
-                                    "title": "Choice 2",
-                                    "value": "Choice 2"
+                                    "title": "Non Refund",
+                                    "value": "Non Refund"
+                                },
+                                {
+                                    "title": "Refundable",
+                                    "value": "Refundable"
                                 }
                             ],
                             "placeholder": "Placeholder text",
@@ -301,7 +309,25 @@
                     "width": "stretch",
                     "items": [
                         {
-                            "type": "Input.Text",
+                            "type": "Input.ChoiceSet",
+                            "choices": [
+                                {
+                                    "title": "Transient",
+                                    "value": "Transient"
+                                },
+                                {
+                                    "title": "Transient-Party",
+                                    "value": "Transient-Party"
+                                },
+                                {
+                                    "title": "Contract",
+                                    "value": "Contract"
+                                },
+                                {
+                                    "title": "Group",
+                                    "value": "Group"
+                                }
+                            ],
                             "placeholder": "Placeholder text",
                             "id": "customer_type1"
                         }
@@ -312,7 +338,25 @@
                     "width": "stretch",
                     "items": [
                         {
-                            "type": "Input.Text",
+                            "type": "Input.ChoiceSet",
+                            "choices": [
+                                {
+                                    "title": "Transient",
+                                    "value": "Transient"
+                                },
+                                {
+                                    "title": "Transient-Party",
+                                    "value": "Transient-Party"
+                                },
+                                {
+                                    "title": "Contract",
+                                    "value": "Contract"
+                                },
+                                {
+                                    "title": "Group",
+                                    "value": "Group"
+                                }
+                            ],
                             "placeholder": "Placeholder text",
                             "id": "customer_type2"
                         }
@@ -488,11 +532,6 @@
                     "title": "Submit "
                 }
             ]
-        },
-        {
-            "type": "TextBlock",
-            "wrap": true,
-            "text": "If you want to submit more values, please submit them in the chat (feature:value)"
         }
     ]
 }

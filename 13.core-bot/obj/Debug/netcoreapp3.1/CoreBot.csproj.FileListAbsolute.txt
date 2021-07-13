@@ -53,6 +53,7 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\n
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\ConditionalCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\PlotCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\PredictionCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\SelectFeaturesCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\SimilarBookingsCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\testCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Cards\welcomeCard_new.json
@@ -68,6 +69,7 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\n
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.deps.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.runtimeconfig.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\CoreBot.runtimeconfig.dev.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\AdaptiveCards.Rendering.Wpf.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Azure.CognitiveServices.Language.LUIS.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Bot.Builder.Dialogs.Declarative.dll
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Debug\netcoreapp3.1\Microsoft.Bot.Configuration.dll

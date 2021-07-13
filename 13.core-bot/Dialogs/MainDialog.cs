@@ -28,7 +28,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         // Dependency injection uses this constructor to instantiate MainDialog
         public MainDialog(LuisXaiRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
         DirectionOfInfluenceCatDialog directionOfInfluenceCatDialog, LocalWaterfallExplDialog localWaterfallExplDialog, ILogger<MainDialog> logger, 
-        ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog)
+        ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog, FeatureImportanceHelpDialog featureImportanceHelpDialog)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
@@ -44,6 +44,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(conditionalShapDialog);
             AddDialog(whatIfDialog);
             AddDialog(similarBookingsDialog);
+            AddDialog(featureImportanceHelpDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 IntroStepAsync,

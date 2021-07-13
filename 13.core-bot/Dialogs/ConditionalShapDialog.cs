@@ -40,6 +40,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             {   
                 GetUserInputAsync,
                 ShowPlotStepAsync,
+                SelectedActionStepAsync,
                 FinalStepAsync,
             }));
 
@@ -51,7 +52,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         {
             if (stepContext.Options == "unexperienced") {
                 await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("Erklärung was ist conditional SHAP CAT (nur für unexperienced)", inputHint: InputHints.IgnoringInput), cancellationToken);
+                MessageFactory.Text("The last part of the global explanation are Conditional SHAP Values. These can help you understand the differences between two customer segments. For this you have to define the customer segments by the value of the Features.", inputHint: InputHints.IgnoringInput), cancellationToken);
             }
 
             
@@ -109,18 +110,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             var jObject1 = BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/conditionalshap");
 
 
-            var templateJson="";
-            using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                     templateJson =  reader.ReadToEnd();
-                     reader.Close();
-                }
-            };
-
-            AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
-
             var myData = new
             {
 
@@ -131,14 +120,10 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             };
 
-            // "Expand" the template - this generates the final Adaptive Card payload
-            string cardJson = template.Expand(myData);
+        
 
-            var cardAttachment = new Attachment()
-            {
-                ContentType = "application/vnd.microsoft.card.adaptive",
-                Content = JsonConvert.DeserializeObject(cardJson),
-            };
+            var cardAttachment = CardCreator.getCardAttachment(myData,"CoreBot.Cards.PlotCard.json");
+    
             // Create the text prompt
             var opts = new PromptOptions
             {   
@@ -155,6 +140,33 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             return await stepContext.PromptAsync(nameof(TextPrompt), opts); 
 
             
+        }
+
+        private async Task<DialogTurnResult> SelectedActionStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {   
+
+            Console.WriteLine("*****************************TESTE ADAPTIVE CARD******************");
+            Console.WriteLine((string)stepContext.Result);
+            var jContext = JObject.Parse((string)stepContext.Result);
+            var actionType = (string) jContext["action"];
+        
+            if (actionType == "SAVE") {
+                BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/saveNotepad");
+                await stepContext.Context.SendActivityAsync(
+                MessageFactory.Text("The explanation was successfully saved to your Notepad."));
+            }
+
+            if (actionType=="NEXT")  {
+                return await stepContext.NextAsync("", cancellationToken);
+            }
+
+            if (actionType =="HELP") {
+
+                stepContext.Context.SendActivityAsync(MessageFactory.Text("This is the place for the Feature HelpDialog"));
+                 return await stepContext.BeginDialogAsync(nameof(FeatureImportanceHelpDialog),stepContext.Options, cancellationToken);
+            }
+
+            return await stepContext.NextAsync("", cancellationToken);
         }
  
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)

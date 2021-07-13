@@ -112,7 +112,7 @@
                             "type": "Input.Number",
                             "placeholder": "Placeholder text",
                             "id": "total_of_special_requests",
-                            "label": "Special requets"
+                            "label": "Special requests"
                         }
                     ]
                 }
@@ -246,14 +246,20 @@
                     "width": "stretch",
                     "items": [
                         {
-                            "type": "TextBlock",
-                            "wrap": true,
-                            "weight": "Bolder",
-                            "text": "Booking changes"
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Arrival date year",
+                            "id": "arrival_date_year"
                         }
-                    ],
-                    "verticalContentAlignment": "Center"
-                },
+                    ]
+                }
+            ],
+            "isVisible": false,
+            "id": "1"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
                 {
                     "type": "Column",
                     "width": "stretch",
@@ -261,13 +267,299 @@
                         {
                             "type": "Input.Number",
                             "placeholder": "Placeholder text",
-                            "id": "booking_changes1"
+                            "id": "arrival_date_day_of_month",
+                            "label": "Arrival date day of month"
+                        }
+                    ]
+                }
+            ],
+            "id": "2",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "stays_in_week_nights",
+                            "label": "Stays in weeknights"
+                        }
+                    ]
+                }
+            ],
+            "id": "3",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "previous_bookings_not_canceled",
+                            "label": "Previous bookings not canceled"
                         }
                     ]
                 }
             ],
             "isVisible": false,
-            "id": "ShowArrivalDateYear"
+            "id": "4"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "adr",
+                            "label": "Adr"
+                        }
+                    ]
+                }
+            ],
+            "id": "5",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Market segment",
+                            "id": "market_segment"
+                        }
+                    ]
+                }
+            ],
+            "id": "6",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "distribution_channel",
+                            "label": "Distribution channel"
+                        }
+                    ]
+                }
+            ],
+            "id": "7",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "id": "meal",
+                            "placeholder": "Placeholder text",
+                            "label": "Meal"
+                        }
+                    ]
+                }
+            ],
+            "id": "8",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "company",
+                            "label": "Company"
+                        }
+                    ]
+                }
+            ],
+            "isVisible": false,
+            "id": "9"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "children",
+                            "label": "Children"
+                        }
+                    ]
+                }
+            ],
+            "id": "10",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Reserved room type",
+                            "id": "reserved_room_type"
+                        }
+                    ]
+                }
+            ],
+            "id": "11",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Stays in weekend nights",
+                            "id": "stays_in_weekend_nights"
+                        }
+                    ]
+                }
+            ],
+            "id": "12",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "adults",
+                            "label": "Adults"
+                        }
+                    ]
+                }
+            ],
+            "id": "13",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "id": "is_repeated_guest",
+                            "label": "Is repeated guest"
+                        }
+                    ]
+                }
+            ],
+            "id": "14",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Days in waiting list",
+                            "id": "days_in_waiting_list"
+                        }
+                    ]
+                }
+            ],
+            "id": "15",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Arrival date month",
+                            "id": "arrival_date_month"
+                        }
+                    ]
+                }
+            ],
+            "id": "16",
+            "isVisible": false
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "Input.Number",
+                            "placeholder": "Placeholder text",
+                            "label": "Babies",
+                            "id": "babies"
+                        }
+                    ]
+                }
+            ],
+            "id": "17",
+            "isVisible": false
         },
         {
             "type": "ActionSet",
@@ -328,7 +620,7 @@
                             "selectAction": {
                                 "type": "Action.ToggleVisibility",
                                 "targetElements": [
-                                    "ShowArrivalDateYear"
+                                    "1"
                                 ]
                             }
                         }
@@ -348,7 +640,13 @@
                                 }
                             ],
                             "id": "ToggleDayOfMonth",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "2"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -372,7 +670,13 @@
                                 }
                             ],
                             "isVisible": false,
-                            "id": "ToggleWeeknights"
+                            "id": "ToggleWeeknights",
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "3"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -390,7 +694,13 @@
                                 }
                             ],
                             "id": "TogglePrevious",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "4"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -414,7 +724,13 @@
                                 }
                             ],
                             "id": "ToggleAdr",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "5"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -432,7 +748,13 @@
                                 }
                             ],
                             "id": "ToggleSegment",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "6"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -456,7 +778,13 @@
                                 }
                             ],
                             "id": "ToggleDistribution",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "7"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -474,7 +802,13 @@
                                 }
                             ],
                             "id": "ToggleMeal",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "8"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -498,7 +832,13 @@
                                 }
                             ],
                             "id": "ToggleCompany",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "9"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -516,7 +856,13 @@
                                 }
                             ],
                             "id": "ToogleChildren",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "10"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -540,7 +886,13 @@
                                 }
                             ],
                             "id": "ToggleRoom",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "11"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -558,7 +910,13 @@
                                 }
                             ],
                             "id": "ToggleStaysinWeekend",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "12"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -582,7 +940,13 @@
                                 }
                             ],
                             "id": "ToggleAdults",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "13"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -600,7 +964,13 @@
                                 }
                             ],
                             "id": "ToggleRepeated",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "14"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -624,7 +994,13 @@
                                 }
                             ],
                             "id": "ToggleWaiting",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "15"
+                                ]
+                            }
                         }
                     ]
                 },
@@ -642,7 +1018,13 @@
                                 }
                             ],
                             "id": "ToggleMonth",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "16"
+                                ]
+                            }
                         }
                     ]
                 }
@@ -666,7 +1048,13 @@
                                 }
                             ],
                             "id": "ToggleBabies",
-                            "isVisible": false
+                            "isVisible": false,
+                            "selectAction": {
+                                "type": "Action.ToggleVisibility",
+                                "targetElements": [
+                                    "17"
+                                ]
+                            }
                         }
                     ]
                 },

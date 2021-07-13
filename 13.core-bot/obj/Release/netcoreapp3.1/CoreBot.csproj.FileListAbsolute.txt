@@ -145,3 +145,5 @@ C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\WhatIfCard_old.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\PredictionCard.json
 C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\SimilarBookingsCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\Cards\SelectFeaturesCard.json
+C:\Users\Felix 1\Documents\GitHub\Teamprojekt-Repository\13.core-bot\bin\Release\netcoreapp3.1\AdaptiveCards.Rendering.Wpf.dll

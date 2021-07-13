@@ -25,7 +25,7 @@
                 {
                     "type": "TextBlock",
                     "wrap": true,
-                    "text": "Show textual Explanation",
+                    "text": "Show Plot Description",
                     "size": "Small",
                     "horizontalAlignment": "Center",
                     "color": "Accent"
@@ -62,8 +62,10 @@
                             "actions": [
                                 {
                                     "type": "Action.Submit",
-                                    "data": {"save": "${title}",
-                                            "action": "HELP"},
+                                    "data": {"title": "${title}",
+                                            "action": "HELP",
+                                            "dialog": "{nameOfDialog}"
+                                            },
                                     "iconUrl": "https://image.flaticon.com/icons/png/512/1479/1479648.png"
                                 }
                             ]
@@ -101,7 +103,8 @@
                                 {
                                     "type": "Action.Submit",
                                     "data": {
-                                        "action": "NEXT"
+                                        "action": "NEXT",
+                                        "title": "${title}"
                                     },
                                     "iconUrl": "https://pics.freeicons.io/uploads/icons/png/15574942051535694868-512.png"
                                 }

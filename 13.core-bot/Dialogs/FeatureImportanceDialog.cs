@@ -24,6 +24,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Net;
 
+//For user Prompt
+using Microsoft.Bot.Builder.Dialogs.Choices;
+
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
     public class FeatureImportanceDialog : CancelAndHelpDialog
@@ -59,23 +62,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             }
 
 
-            // Create Adpative Card with Plot
-            //var jsonData = (string) await client.GetStringAsync("https://49fa66626805.ngrok.io/explanation/featureimportance?count=10");
-            //var jObject = JObject.Parse(jsonData);
-
             var jObject = await BOT_Api.getJson("/explanation/featureimportance?count=10");
-
-            var templateJson="";
-            using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                     templateJson =  reader.ReadToEnd();
-                     reader.Close();
-                }
-            };
-
-            AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
 
             var myData = new
             {
@@ -84,17 +71,8 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 Url= (string) jObject["url"],
                 Save_data = "Feature importance plot",
                 Textexpl = "Ordered after the highest mean SHAP-Value (doesn't matter if negative or positive). The mean SHAP-Value is calculated by summing up all observations and dividing by the count of observations."
-
             };
-
-            // "Expand" the template - this generates the final Adaptive Card payload
-            string cardJson = template.Expand(myData);
-
-            var cardAttachment = new Attachment()
-            {
-                ContentType = "application/vnd.microsoft.card.adaptive",
-                Content = JsonConvert.DeserializeObject(cardJson),
-            };
+            var cardAttachment = CardCreator.getCardAttachment(myData, "CoreBot.Cards.PlotCard.json");
             // Create the text prompt
             var opts = new PromptOptions
             {   
@@ -102,31 +80,28 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 Prompt = new Activity
                 {   Attachments = new List<Attachment>() { cardAttachment },
                     Type = ActivityTypes.Message,
-                    Text = "", // You can comment this out if you don't want to display any text. Still works.
                 }
             };
 
             
             // Display a Text Prompt and wait for input
-            return await stepContext.PromptAsync(nameof(TextPrompt), opts);    
+            return await stepContext.PromptAsync(nameof(TextPrompt), opts);  
+
+
         }
 
 
 
         private async Task<DialogTurnResult> SelectedActionStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-        
+        {   
+
+            Console.WriteLine("*****************************TESTE ADAPTIVE CARD******************");
+            Console.WriteLine((string)stepContext.Result);
             var jContext = JObject.Parse((string)stepContext.Result);
             var actionType = (string) jContext["action"];
-            Console.WriteLine(jContext);
+        
             if (actionType == "SAVE") {
-                // Send a POST request to the backend
-                Dictionary<string,string> dict = new Dictionary<string, string>();
-                dict.Add("url",(string) jContext["url"] );
-                dict.Add("title",(string) jContext["title"] );
-                dict.Add("text",(string) jContext["text"] );
-                BOT_Api.saveToNotepad(dict);
-
+                BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/saveNotepad");
                 await stepContext.Context.SendActivityAsync(
                 MessageFactory.Text("The explanation was successfully saved to your Notepad."));
             }
@@ -137,24 +112,8 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             if (actionType =="HELP") {
 
-                int counter = 0;
-
-                await stepContext.Context.SendActivityAsync(MessageFactory.Text("The ten most important features are:"), cancellationToken);
-                var jObject = await BOT_Api.getJson("/explanation/featureimportance?count=10"); // JObject.Parse(content1);
-              
-                while (counter < 5)
-
-                {
-
-                    Console.WriteLine(jObject["values"]);
-                    var output1 = (string)jObject["values"][counter];
-
-                    await stepContext.Context.SendActivityAsync(MessageFactory.Text(output1));
-                    
-                    counter++;
-
-                }
-                
+                stepContext.Context.SendActivityAsync(MessageFactory.Text("This is the place for the Feature ImportanceHelpDialog"));
+                return await stepContext.BeginDialogAsync(nameof(FeatureImportanceHelpDialog), stepContext.Options, cancellationToken);
             }
 
             return await stepContext.NextAsync("", cancellationToken);
@@ -172,11 +131,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 return await stepContext.EndDialogAsync(null,cancellationToken);
         }
 
-        private static bool IsAmbiguous(string timex)
-        {
-            var timexProperty = new TimexProperty(timex);
-            return !timexProperty.Types.Contains(Constants.TimexTypes.Definite);
-        }
 
 
 

@@ -21,15 +21,16 @@ using Newtonsoft.Json;
 using AdaptiveCards.Templating;
 using AdaptiveCards;
 
+
 public class CardCreator
 {
     
 
-    public Attachment getCardAttachment (object data, string card)
+    public static Attachment getCardAttachment (object data, string card)
     {       
             
          var templateJson="";
-            using (var stream = GetType().Assembly.GetManifestResourceStream(card))
+            using (var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(card))
             {
                 using (var reader = new StreamReader(stream))
                 {
@@ -54,6 +55,4 @@ public class CardCreator
             return cardAttachment;
     }
 
-
- 
 }

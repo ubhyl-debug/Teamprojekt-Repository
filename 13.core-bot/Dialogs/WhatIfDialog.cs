@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
+using AdaptiveCards.Rendering.Wpf;
 
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 
@@ -29,7 +30,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
     public class WhatIfDialog : CancelAndHelpDialog
     
     {
-             CardCreator c1 = new CardCreator();
+    
         
 
         public WhatIfDialog()
@@ -55,7 +56,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         {
             if (stepContext.Options == "unexperienced") {
                 await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("Erklärung was ist conditional SHAP CAT (nur für unexperienced)", inputHint: InputHints.IgnoringInput), cancellationToken);
+                MessageFactory.Text("", inputHint: InputHints.IgnoringInput), cancellationToken);
             }
 
             
@@ -128,10 +129,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 arrival_date_week_number=(string) jObject1["booking"]["arrival_date_week_number"],
                 booking_changes=(string) jObject1["booking"]["booking_changes"],
             };
-            var cardAttachment1 = c1.getCardAttachment(myData1, "CoreBot.Cards.PredictionCard.json");
+            var cardAttachment1 =CardCreator.getCardAttachment(myData1, "CoreBot.Cards.PredictionCard.json");
             await stepContext.Context.SendActivityAsync(
                     MessageFactory.Attachment(cardAttachment1));
 
+        
 
             var templateJson="";
             using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
@@ -183,9 +185,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
  
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (stepContext.Options == "unexperienced") {
-                return await stepContext.BeginDialogAsync(nameof(LocalWaterfallExplDialog),stepContext.Options, cancellationToken);
-            }
+        
 
                 return await stepContext.EndDialogAsync(null,cancellationToken);
         }
