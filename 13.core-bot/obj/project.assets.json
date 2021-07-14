@@ -2,6 +2,20 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "AdaptiveCards/2.7.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "[11.0.2, 12.0.3]",
+          "System.Net.Http": "4.3.4"
+        },
+        "compile": {
+          "lib/netstandard2.0/AdaptiveCards.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/AdaptiveCards.dll": {}
+        }
+      },
       "AdaptiveCards.Rendering.Wpf/2.7.1": {
         "type": "package",
         "compile": {
@@ -2317,6 +2331,24 @@
     }
   },
   "libraries": {
+    "AdaptiveCards/2.7.1": {
+      "sha512": "UZhHAnqs9CCAW01bLvp/4CdguI7NlqqlwoFDMTQ5sQSywAXlIqb1v0lxKCYuS4kIEUVksB2WE3JExcddVDyZ8Q==",
+      "type": "package",
+      "path": "adaptivecards/2.7.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EULA-Windows.txt",
+        "adaptivecards.2.7.1.nupkg.sha512",
+        "adaptivecards.nuspec",
+        "lib/net452/AdaptiveCards.dll",
+        "lib/net452/AdaptiveCards.xml",
+        "lib/netstandard1.3/AdaptiveCards.dll",
+        "lib/netstandard1.3/AdaptiveCards.xml",
+        "lib/netstandard2.0/AdaptiveCards.dll",
+        "lib/netstandard2.0/AdaptiveCards.xml"
+      ]
+    },
     "AdaptiveCards.Rendering.Wpf/2.7.1": {
       "sha512": "zSP+knXX5UXDc59Ds07WVQw5QfXFb8VF8PaLGEGi989ADO1xN48ggeDXZXWCLXbs4QgYUqcgbPzcyFTyIHfyWw==",
       "type": "package",
@@ -7531,6 +7563,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "AdaptiveCards >= 2.7.1",
       "AdaptiveCards.Rendering.Wpf >= 2.7.1",
       "AdaptiveCards.Templating >= 1.2.1",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 3.1.1",
@@ -7581,6 +7614,10 @@
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
+          "AdaptiveCards": {
+            "target": "Package",
+            "version": "[2.7.1, )"
+          },
           "AdaptiveCards.Rendering.Wpf": {
             "target": "Package",
             "version": "[2.7.1, )"
@@ -7656,6 +7693,16 @@
       "level": "Warning",
       "warningLevel": 1,
       "message": "Erkannte Paketversion außerhalb der Abhängigkeitseinschränkung: \"AdaptiveCards.Templating 1.2.1\" erfordert Newtonsoft.Json (>= 11.0.2 && <= 12.0.3), aber es wurde Version Newtonsoft.Json 13.0.1 aufgelöst.",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Erkannte Paketversion außerhalb der Abhängigkeitseinschränkung: \"AdaptiveCards 2.7.1\" erfordert Newtonsoft.Json (>= 11.0.2 && <= 12.0.3), aber es wurde Version Newtonsoft.Json 13.0.1 aufgelöst.",
       "libraryId": "Newtonsoft.Json",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"

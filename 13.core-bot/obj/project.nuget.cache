@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "4XCVNCvvZJGKOQMHuncYFcjb28ALiaJXaTIe1QRYFzsMcTBJTU5nWNAgqV9dBy6BDpFDPkAy8IJvlrbc1IQFPw==",
+  "dgSpecHash": "csIv0/FW9qiTiYJ13tNdYmUcYX4KQCaCU4jAA9HKW0RHtGFo6rUlD1va158FNoHewmWNAiBj/5NejnljYOqpMw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Felix 1\\Documents\\GitHub\\Teamprojekt-Repository\\13.core-bot\\CoreBot.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Felix 1\\.nuget\\packages\\adaptivecards\\2.7.1\\adaptivecards.2.7.1.nupkg.sha512",
     "C:\\Users\\Felix 1\\.nuget\\packages\\adaptivecards.rendering.wpf\\2.7.1\\adaptivecards.rendering.wpf.2.7.1.nupkg.sha512",
     "C:\\Users\\Felix 1\\.nuget\\packages\\adaptivecards.templating\\1.2.1\\adaptivecards.templating.1.2.1.nupkg.sha512",
     "C:\\Users\\Felix 1\\.nuget\\packages\\adaptiveexpressions\\4.13.2\\adaptiveexpressions.4.13.2.nupkg.sha512",
@@ -172,6 +173,16 @@
       "level": "Warning",
       "warningLevel": 1,
       "message": "Erkannte Paketversion außerhalb der Abhängigkeitseinschränkung: \"AdaptiveCards.Templating 1.2.1\" erfordert Newtonsoft.Json (>= 11.0.2 && <= 12.0.3), aber es wurde Version Newtonsoft.Json 13.0.1 aufgelöst.",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Erkannte Paketversion außerhalb der Abhängigkeitseinschränkung: \"AdaptiveCards 2.7.1\" erfordert Newtonsoft.Json (>= 11.0.2 && <= 12.0.3), aber es wurde Version Newtonsoft.Json 13.0.1 aufgelöst.",
       "libraryId": "Newtonsoft.Json",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"

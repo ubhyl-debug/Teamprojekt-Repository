@@ -129,64 +129,22 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 arrival_date_week_number=(string) jObject1["booking"]["arrival_date_week_number"],
                 booking_changes=(string) jObject1["booking"]["booking_changes"],
             };
-            var cardAttachment1 =CardCreator.getCardAttachment(myData1, "CoreBot.Cards.PredictionCard.json");
-            await stepContext.Context.SendActivityAsync(
-                    MessageFactory.Attachment(cardAttachment1));
-
-        
-
-            var templateJson="";
-            using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.PlotCard.json"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                     templateJson =  reader.ReadToEnd();
-                     reader.Close();
-                }
-            };
-
-            AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
-
-            var myData = new
-            {
-
-                Title= "Conditional shap Values",
-                Url= (string) jObject1["url"],
-                Save_data = "Direction of Infleunce (categorical Features)",
-                Textexpl = "The plot shows ....."
-
-            };
-
-            // "Expand" the template - this generates the final Adaptive Card payload
-            string cardJson = template.Expand(myData);
-
-            var cardAttachment = new Attachment()
-            {
-                ContentType = "application/vnd.microsoft.card.adaptive",
-                Content = JsonConvert.DeserializeObject(cardJson),
-            };
-            // Create the text prompt
+            var cardAttachment =CardCreator.getCardAttachment(myData1, "CoreBot.Cards.PredictionCard.json");
+            
             var opts = new PromptOptions
             {   
                 
                 Prompt = new Activity
                 {   Attachments = new List<Attachment>() { cardAttachment },
                     Type = ActivityTypes.Message,
-                    //Text = "", 
                 }
             };
 
-            
-            // Display a Text Prompt and wait for input
-            return await stepContext.PromptAsync(nameof(TextPrompt), opts); 
+            return await stepContext.PromptAsync(nameof(TextPrompt), opts);    
 
-            
         }
- 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-        
-
                 return await stepContext.EndDialogAsync(null,cancellationToken);
         }
 

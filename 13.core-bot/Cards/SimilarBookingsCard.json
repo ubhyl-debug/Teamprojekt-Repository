@@ -81,10 +81,8 @@
                         {
                             "type": "Container",
                             "selectAction": {
-                                "type": "Action.OpenUrl"
-                            },
-                            "backgroundImage": {
-                                "url": "google.de"
+                                "type": "Action.OpenUrl",
+                                "url": "http://localhost:8080/about/73278"
                             },
                             "items": [
                                 {

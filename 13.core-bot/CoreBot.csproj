@@ -16,11 +16,13 @@
     <EmbeddedResource Include="Cards\ConditionalCard.json" />
     <EmbeddedResource Include="Cards\WhatIfCard.json" />
     <EmbeddedResource Include="Cards\PredictionCard.json" />
-     <EmbeddedResource Include="Cards\SimilarBookingsCard.json" />
-      <EmbeddedResource Include="Cards\SelectFeaturesCard.json" />
+    <EmbeddedResource Include="Cards\SimilarBookingsCard.json" />
+    <EmbeddedResource Include="Cards\SelectFeaturesCard.json" />
+    <EmbeddedResource Include="Cards\PlotCardExperienced.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AdaptiveCards" Version="2.7.1" />
     <PackageReference Include="AdaptiveCards.Rendering.Wpf" Version="2.7.1" />
     <PackageReference Include="AdaptiveCards.Templating" Version="1.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />

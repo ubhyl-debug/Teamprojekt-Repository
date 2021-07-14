@@ -69,8 +69,9 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             if (stepContext.Options == "unexperienced") {
                 return await stepContext.BeginDialogAsync(nameof(DirectionOfInfluenceNumDialog),stepContext.Options, cancellationToken);
             }
-
-                return await stepContext.EndDialogAsync(null,cancellationToken);
+                Object res = new Object();
+                    res="TESTEN DIALOG CONTEXT";
+                return await stepContext.EndDialogAsync(res,cancellationToken);
         }
 
 

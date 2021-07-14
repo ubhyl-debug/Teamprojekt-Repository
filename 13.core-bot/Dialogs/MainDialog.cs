@@ -13,9 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Recognizers.Text.DataTypes.TimexExpression;
 using System.Net.Http;
 
-
 //For user Prompt
 using Microsoft.Bot.Builder.Dialogs.Choices;
+using Luis;
 
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
@@ -23,12 +23,13 @@ namespace Microsoft.BotBuilderSamples.Dialogs
     {
         private readonly LuisXaiRecognizer _luisRecognizer;
         protected readonly ILogger Logger;
-        public HttpClient client;
+    
 
         // Dependency injection uses this constructor to instantiate MainDialog
         public MainDialog(LuisXaiRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
         DirectionOfInfluenceCatDialog directionOfInfluenceCatDialog, LocalWaterfallExplDialog localWaterfallExplDialog, ILogger<MainDialog> logger, 
-        ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog, FeatureImportanceHelpDialog featureImportanceHelpDialog)
+        ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog, FeatureImportanceHelpDialog featureImportanceHelpDialog,
+        FeatureImportanceDialog1 featureImportanceDialog1)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
@@ -38,6 +39,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(new ChoicePrompt(nameof(ChoicePrompt)));
             AddDialog(bookingDialog);
             AddDialog(featureImportanceDialog);
+            AddDialog(featureImportanceDialog1);
             AddDialog(directionOfInfluenceNumDialog);
             AddDialog(directionOfInfluenceCatDialog);
             AddDialog(localWaterfallExplDialog);
@@ -57,7 +59,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             // The initial child Dialog to run.
             InitialDialogId = nameof(WaterfallDialog);
             
-            this.client = new HttpClient();
         }
 
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
@@ -70,11 +71,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 return await stepContext.NextAsync(null, cancellationToken);
             }
 
-            if(_luisRecognizer.IsConfigured)
-            {
-                await stepContext.Context.SendActivityAsync(
-                    MessageFactory.Text("LUIS FUNKTIONIERT ", inputHint: InputHints.IgnoringInput), cancellationToken);
-            }
 
             // Use the text provided in FinalStepAsync or the default if it is the first time.
             //var weekLaterDate = DateTime.Now.AddDays(7).ToString("MMMM d, yyyy");
@@ -87,118 +83,81 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         {
             // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
             // Running a prompt here means the next WaterfallStep will be run when the user's response is received.
+      
             return await stepContext.PromptAsync(nameof(ChoicePrompt),
                 new PromptOptions
                 {
                     Prompt = MessageFactory.Text("Please enter your level of experience."),
                     Choices = ChoiceFactory.ToChoices(new List<string> { "Experienced", "Unexperienced" }),
+                    Style = ListStyle.SuggestedAction,
                 }, cancellationToken);
+
         }
 
         private async Task<DialogTurnResult> CheckUserExperienceAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
+        {   
+            
             var choice = ((FoundChoice)stepContext.Result).Value;
             if (choice == "Unexperienced")  {
                 Console.WriteLine("**************Unexperienced Dialog started.....********************");
-            return await stepContext.BeginDialogAsync(nameof(FeatureImportanceDialog), "unexperienced", cancellationToken);
+            return await stepContext.BeginDialogAsync(nameof(SimilarBookingsDialog), "unexperienced", cancellationToken);
             }
             else {
                 Console.WriteLine();
-            var promptMessage = MessageFactory.Text("TEST","TEST", InputHints.ExpectingInput);
+            var promptMessage = MessageFactory.Text("What can i help you with today?",null, InputHints.ExpectingInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
             }
         }
 
 
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            if (!_luisRecognizer.IsConfigured)
-            {
-                // LUIS is not configured, we just run the BookingDialog path with an empty BookingDetailsInstance.
-                return await stepContext.BeginDialogAsync(nameof(BookingDialog), new BookingDetails(), cancellationToken);
-            }
+        {    
+            Console.WriteLine("************STEPCONTEXT:" + stepContext.Result);
+            var luisResult2 = await _luisRecognizer.RecognizeAsync<XaiInteraction>(stepContext.Context, cancellationToken);
 
-            // Call LUIS and gather any potential booking details. (Note the TurnContext has the response to the prompt.)
-            var luisResult = await _luisRecognizer.RecognizeAsync<FlightBooking>(stepContext.Context, cancellationToken);
-            switch (luisResult.TopIntent().intent)
-            {
-                case FlightBooking.Intent.BookFlight:
-                    await ShowWarningForUnsupportedCities(stepContext.Context, luisResult, cancellationToken);
 
-                    // Initialize BookingDetails with any entities we may have found in the response.
-                    var bookingDetails = new BookingDetails()
-                    {
-                        // Get destination and origin from the composite entities arrays.
-                        Destination = luisResult.ToEntities.Airport,
-                        Origin = luisResult.FromEntities.Airport,
-                        TravelDate = luisResult.TravelDate,
+            switch(luisResult2.TopIntent().intent)
+            {
+                case  XaiInteraction.Intent.FeatureImportance:
+
+
+                    //User wants to get Feature Importance
+                    string feature = luisResult2.FeatureImportanceParams.selectedFeature;
+                    string number = luisResult2.FeatureImportanceParams.number;
+                    string ordinal = luisResult2.FeatureImportanceParams.ordinal;
+                    string ordinalInt = luisResult2.FeatureImportanceParams.ordinalInt;
+
+                    Console.WriteLine("CHECK: LUIS RESPONSE");
+                    Console.WriteLine(feature);
+                    Console.WriteLine(number);
+                    Console.WriteLine(ordinal);
+
+                    var featureImportanceDetails = new FeatureImportanceDetails(){
+                        UserExperience = stepContext.Options.ToString(),
+                        Feature = feature,
+                        number = number,
+                        ordinal = ordinal,
+
                     };
 
-                    // Run the BookingDialog giving it whatever details we have from the LUIS call, it will fill out the remainder.
-                    return await stepContext.BeginDialogAsync(nameof(BookingDialog), bookingDetails, cancellationToken);
-
-                case FlightBooking.Intent.GetWeather:
-                    // We haven't implemented the GetWeatherDialog so we just display a TODO message.
-                    var getWeatherMessageText = "TODO: get weather flow here";
-                    var getWeatherMessage = MessageFactory.Text(getWeatherMessageText, getWeatherMessageText, InputHints.IgnoringInput);
-                    await stepContext.Context.SendActivityAsync(getWeatherMessage, cancellationToken);
-                    break;
+                    return await stepContext.BeginDialogAsync(nameof(FeatureImportanceDialog1), featureImportanceDetails, cancellationToken);
 
                 default:
-                    // Catch all for unhandled intents
-                    var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {luisResult.TopIntent().intent})";
+                    var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {luisResult2.TopIntent().intent})";
                     var didntUnderstandMessage = MessageFactory.Text(didntUnderstandMessageText, didntUnderstandMessageText, InputHints.IgnoringInput);
                     await stepContext.Context.SendActivityAsync(didntUnderstandMessage, cancellationToken);
                     break;
+ 
+
             }
 
             return await stepContext.NextAsync(null, cancellationToken);
         }
 
-        // Shows a warning if the requested From or To cities are recognized as entities but they are not in the Airport entity list.
-        // In some cases LUIS will recognize the From and To composite entities as a valid cities but the From and To Airport values
-        // will be empty if those entity values can't be mapped to a canonical item in the Airport.
-        private static async Task ShowWarningForUnsupportedCities(ITurnContext context, FlightBooking luisResult, CancellationToken cancellationToken)
-        {
-            var unsupportedCities = new List<string>();
-
-            var fromEntities = luisResult.FromEntities;
-            if (!string.IsNullOrEmpty(fromEntities.From) && string.IsNullOrEmpty(fromEntities.Airport))
-            {
-                unsupportedCities.Add(fromEntities.From);
-            }
-
-            var toEntities = luisResult.ToEntities;
-            if (!string.IsNullOrEmpty(toEntities.To) && string.IsNullOrEmpty(toEntities.Airport))
-            {
-                unsupportedCities.Add(toEntities.To);
-            }
-
-            if (unsupportedCities.Any())
-            {
-                var messageText = $"Sorry but the following airports are not supported: {string.Join(',', unsupportedCities)}";
-                var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
-                await context.SendActivityAsync(message, cancellationToken);
-            }
-        }
+     
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            // If the child dialog ("BookingDialog") was cancelled, the user failed to confirm or if the intent wasn't BookFlight
-            // the Result here will be null.
-            if (stepContext.Result is BookingDetails result)
-            {
-                // Now we have all the booking details call the booking service.
-
-                // If the call to the booking service was successful tell the user.
-
-                var timeProperty = new TimexProperty(result.TravelDate);
-                var travelDateMsg = timeProperty.ToNaturalLanguage(DateTime.Now);
-                var messageText = $"I have you booked to {result.Destination} from {result.Origin} on {travelDateMsg}";
-                var message = MessageFactory.Text(messageText, messageText, InputHints.IgnoringInput);
-                await stepContext.Context.SendActivityAsync(message, cancellationToken);
-            }
-
             // Restart the main dialog with a different message the second time around
             var promptMessage = "What else can I do for you?";
             return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);

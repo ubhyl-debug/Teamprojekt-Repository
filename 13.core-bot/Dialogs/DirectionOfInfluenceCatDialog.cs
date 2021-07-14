@@ -63,7 +63,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 Prompt = new Activity
                 {   Attachments = new List<Attachment>() { cardAttachment },
                     Type = ActivityTypes.Message,
-                    Text = "", // You can comment this out if you don't want to display any text. Still works.
                 }
             };
 

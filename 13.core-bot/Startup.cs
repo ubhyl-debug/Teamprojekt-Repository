@@ -39,7 +39,7 @@ namespace Microsoft.BotBuilderSamples
 
             // Register the FeatureImportanceDialog.
             services.AddSingleton<FeatureImportanceDialog>();
-
+            services.AddSingleton<FeatureImportanceDialog1>();
             services.AddSingleton<DirectionOfInfluenceNumDialog>();
             services.AddSingleton<DirectionOfInfluenceCatDialog>();
             services.AddSingleton<LocalWaterfallExplDialog>();
