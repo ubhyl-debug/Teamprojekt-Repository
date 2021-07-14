@@ -29,7 +29,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         public MainDialog(LuisXaiRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
         DirectionOfInfluenceCatDialog directionOfInfluenceCatDialog, LocalWaterfallExplDialog localWaterfallExplDialog, ILogger<MainDialog> logger, 
         ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog, FeatureImportanceHelpDialog featureImportanceHelpDialog,
-        FeatureImportanceDialog1 featureImportanceDialog1)
+        FeatureImportanceDialog1 featureImportanceDialog1, SaveDialog saveDialog)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
@@ -45,11 +45,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(localWaterfallExplDialog);
             AddDialog(conditionalShapDialog);
             AddDialog(whatIfDialog);
+            AddDialog(saveDialog);
             AddDialog(similarBookingsDialog);
             AddDialog(featureImportanceHelpDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
-                IntroStepAsync,
                 UserExperienceAsync,
                 CheckUserExperienceAsync,
                 ActStepAsync,
@@ -61,8 +61,9 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             
         }
 
-        private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
+        private async Task<DialogTurnResult> UserExperienceAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {   
+
             if (!_luisRecognizer.IsConfigured)
             {
                 await stepContext.Context.SendActivityAsync(
@@ -70,25 +71,20 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
                 return await stepContext.NextAsync(null, cancellationToken);
             }
+    
 
+            if (stepContext.Options != null ) {
+                return await stepContext.NextAsync();
+            }
 
-            // Use the text provided in FinalStepAsync or the default if it is the first time.
-            //var weekLaterDate = DateTime.Now.AddDays(7).ToString("MMMM d, yyyy");
-            //var messageText = stepContext.Options?.ToString() ?? $"What can I help you with today?\nSay something like \"Book a flight from Paris to Berlin on {weekLaterDate}\"";
-            //var promptMessage = MessageFactory.Text(messageText, messageText, InputHints.ExpectingInput);
-            return await stepContext.NextAsync(null, cancellationToken);
-        }
-
-        private async Task<DialogTurnResult> UserExperienceAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
             // WaterfallStep always finishes with the end of the Waterfall or with another dialog; here it is a Prompt Dialog.
             // Running a prompt here means the next WaterfallStep will be run when the user's response is received.
-      
+           
             return await stepContext.PromptAsync(nameof(ChoicePrompt),
                 new PromptOptions
                 {
                     Prompt = MessageFactory.Text("Please enter your level of experience."),
-                    Choices = ChoiceFactory.ToChoices(new List<string> { "Experienced", "Unexperienced" }),
+                    Choices = ChoiceFactory.ToChoices(new List<string> { "Experienced", "Unexperienced"}),
                     Style = ListStyle.SuggestedAction,
                 }, cancellationToken);
 
@@ -97,27 +93,37 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         private async Task<DialogTurnResult> CheckUserExperienceAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {   
             
-            var choice = ((FoundChoice)stepContext.Result).Value;
+            var choice = ((FoundChoice)stepContext?.Result)?.Value;
             if (choice == "Unexperienced")  {
-                Console.WriteLine("**************Unexperienced Dialog started.....********************");
+                Console.WriteLine("************Unexperienced Dialog started.....********************");
             return await stepContext.BeginDialogAsync(nameof(SimilarBookingsDialog), "unexperienced", cancellationToken);
             }
-            else {
-                Console.WriteLine();
-            var promptMessage = MessageFactory.Text("What can i help you with today?",null, InputHints.ExpectingInput);
-            return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+           
+            if (stepContext.Options == null) { 
+                var promptMessage1 = MessageFactory.Text("What can i help you with today?",null, InputHints.ExpectingInput);
+                return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage1 }, cancellationToken);
             }
+
+            var promptMessage = MessageFactory.Text("What else can i help you with?",null, InputHints.ExpectingInput);
+                return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+
+            
         }
 
 
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {    
-            Console.WriteLine("************STEPCONTEXT:" + stepContext.Result);
+            Console.WriteLine("*********STEPCONTEXT:" + stepContext.Result);
             var luisResult2 = await _luisRecognizer.RecognizeAsync<XaiInteraction>(stepContext.Context, cancellationToken);
 
 
             switch(luisResult2.TopIntent().intent)
-            {
+            {   
+
+                case  XaiInteraction.Intent.SaveExplanation:
+                        //User wants to save explanation
+                    return await stepContext.BeginDialogAsync(nameof(SaveDialog), stepContext.Options, cancellationToken);
+
                 case  XaiInteraction.Intent.FeatureImportance:
 
 
@@ -133,7 +139,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                     Console.WriteLine(ordinal);
 
                     var featureImportanceDetails = new FeatureImportanceDetails(){
-                        UserExperience = stepContext.Options.ToString(),
                         Feature = feature,
                         number = number,
                         ordinal = ordinal,
@@ -146,21 +151,26 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                     var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {luisResult2.TopIntent().intent})";
                     var didntUnderstandMessage = MessageFactory.Text(didntUnderstandMessageText, didntUnderstandMessageText, InputHints.IgnoringInput);
                     await stepContext.Context.SendActivityAsync(didntUnderstandMessage, cancellationToken);
-                    break;
+                    return await stepContext.NextAsync(null);
  
 
             }
-
-            return await stepContext.NextAsync(null, cancellationToken);
         }
 
      
 
         private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
+        {   
+
+            if (!(stepContext.Result is string)) {   
+            Console.WriteLine(((ExplanationContext)stepContext.Result).title);
+            var received_data = (((ExplanationContext)stepContext.Result));
+            return await stepContext.ReplaceDialogAsync(InitialDialogId, received_data, cancellationToken);
+            }
+
+            return await stepContext.ReplaceDialogAsync(InitialDialogId, "NO_DATA", cancellationToken);
             // Restart the main dialog with a different message the second time around
-            var promptMessage = "What else can I do for you?";
-            return await stepContext.ReplaceDialogAsync(InitialDialogId, promptMessage, cancellationToken);
+            
         }
     }
 }

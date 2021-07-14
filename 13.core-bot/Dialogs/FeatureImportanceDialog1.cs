@@ -30,10 +30,14 @@ using System.Linq;
 namespace Microsoft.BotBuilderSamples.Dialogs
 {
     public class FeatureImportanceDialog1 : CancelAndHelpDialog
-    {
-        public FeatureImportanceDialog1()
+    {   
+
+        private readonly LuisXaiRecognizer _luisRecognizer;
+        public FeatureImportanceDialog1(LuisXaiRecognizer luisRecognizer)
             : base(nameof(FeatureImportanceDialog1))
         {   
+
+            _luisRecognizer = luisRecognizer;
               // Add named dialogs to the DialogSet. These names are saved in the dialog state.
             AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new ConfirmPrompt(nameof(ConfirmPrompt)));
@@ -44,7 +48,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {   
                 ShowFeatureImportanceAsync,
-                FinalStepAsync,
             }));
 
             // The initial child Dialog to run.
@@ -85,7 +88,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 MessageFactory.Text("I just understood that you want to know the feature importance, but didn't got your specified parameters. I'll display the default plot.", inputHint: InputHints.IgnoringInput), cancellationToken);
             }
 
-            var myData = new
+            var myData = new 
             {
 
                 Title= "Feature Importance Plot ",
@@ -93,30 +96,27 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 Save_data = "Feature importance plot",
                 Textexpl = "Ordered after the highest mean SHAP-Value (doesn't matter if negative or positive). The mean SHAP-Value is calculated by summing up all observations and dividing by the count of observations."
             };
+
+            ExplanationContext data =  new ExplanationContext {
+                    UserExperience = "experienced",
+                    url = (string) jObject["url"],
+                    title = "Feature Importance Plot ",
+                    text = "Ordered after the highest mean SHAP-Value (doesn't matter if negative or positive). The mean SHAP-Value is calculated by summing up all observations and dividing by the count of observations."
+            };
+
+            
             
             
             var cardAttachment = CardCreator.getCardAttachment(myData, "CoreBot.Cards.PlotCardExperienced.json");
             // Create the text prompt
+            var response = MessageFactory.Attachment(cardAttachment);
             
-
-            var promptMessage = MessageFactory.Text("Can I help you with something else?",null,InputHints.ExpectingInput);
-            // Display a Text Prompt and wait for input
-            return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+            await stepContext.Context.SendActivityAsync(response, cancellationToken);
+            
     
+            //return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+            return await stepContext.EndDialogAsync(data,cancellationToken); 
         }
-
-        private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {   
-            if (stepContext.Options == "unexperienced") {
-                return await stepContext.BeginDialogAsync(nameof(DirectionOfInfluenceNumDialog),stepContext.Options, cancellationToken);
-            }
-                Object res = new Object();
-                res="TESTEN DIALOG CONTEXT";
-                return await stepContext.EndDialogAsync(res,cancellationToken);
-
-        }
-
-
 
 
     }

@@ -24,6 +24,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected readonly BotState ConversationState;
         protected readonly BotState UserState;
         protected readonly ILogger Logger;
+        private BotState _conversationState;
 
         public DialogBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger)
         {
@@ -31,12 +32,15 @@ namespace Microsoft.BotBuilderSamples.Bots
             UserState = userState;
             Dialog = dialog;
             Logger = logger;
+         
         }
 
         public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
         {   
             var activity = turnContext.Activity;
 
+            Console.WriteLine("******************THIS IS A TURN***************");
+            Console.WriteLine(turnContext);
             //Added for Choice in Adaptive Cards
 
             if (string.IsNullOrWhiteSpace(activity.Text) && activity.Value != null)
@@ -53,6 +57,8 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             Logger.LogInformation("Running dialog with Message Activity.");
+            Console.WriteLine("******************THIS IS A MESSAGE***************");
+            Console.WriteLine(turnContext);
             // Run the Dialog with the new message Activity.
             await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
         }

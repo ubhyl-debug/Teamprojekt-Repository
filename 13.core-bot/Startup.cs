@@ -25,6 +25,15 @@ namespace Microsoft.BotBuilderSamples
             // Create the storage we'll be using for User and Conversation state. (Memory is great for testing purposes.)
             services.AddSingleton<IStorage, MemoryStorage>();
 
+            // Create the storage we'll be using for User and Conversation state.
+            // (Memory is great for testing purposes - examples of implementing storage with
+            // Azure Blob Storage or Cosmos DB are below).
+            var storage = new MemoryStorage();
+
+            // Create the Conversation state passing in the storage layer.
+            var conversationState = new ConversationState(storage);
+            services.AddSingleton(conversationState);
+
             // Create the User state. (Used in this bot's Dialog implementation.)
             services.AddSingleton<UserState>();
 
@@ -45,6 +54,7 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<LocalWaterfallExplDialog>();
             services.AddSingleton<ConditionalShapDialog>();
             services.AddSingleton<WhatIfDialog>();
+            services.AddSingleton<SaveDialog>();
             services.AddSingleton<SimilarBookingsDialog>();
             services.AddSingleton<FeatureImportanceHelpDialog>();
 
