@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 using AdaptiveCards.Templating;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
-
+using System;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -32,8 +32,17 @@ namespace Microsoft.BotBuilderSamples.Bots
                 // Greet anyone that was not the target (recipient) of this message.
                 // To learn more about Adaptive Cards, see https://aka.ms/msbot-adaptivecards for more details.
                 if (member.Id != turnContext.Activity.Recipient.Id)
-                {
-                    var welcomeCard = CreateAdaptiveCardAttachment();
+                {   
+                     var jObject = await BOT_Api.getJson("/explanation/getlastprediction");
+
+                Console.WriteLine("TTTTTTTTTT" + jObject["booking"][0]["booking_normal"]["prediction_proba"]);
+            var myData = new
+            {
+
+                prediction = jObject["booking"][0]["booking_normal"]["prediction_proba"].ToString()
+            };
+                    var welcomeCard = CardCreator.getCardAttachment(myData, "CoreBot.Cards.testCard.json");
+                    
                     var response = MessageFactory.Attachment(welcomeCard, ssml: "Welcome to Bot Framework!");
                     await turnContext.SendActivityAsync(response, cancellationToken);
                     await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
@@ -41,47 +50,6 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
         }
 
-        // Load attachment from embedded resource.
-       private Attachment CreateAdaptiveCardAttachment()
-        {
-            var templateJson="";
-            using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.testCard.json"))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                     templateJson =  reader.ReadToEnd();
-                     reader.Close();
-                }
-            };
-
-            // Create a Template instance from the template payload
-            AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
-            // You can use any serializable object as your data
-            var myData = new
-            {
-
-                Title = "Feature Importance",
-                Url = "https://quickchart.io/chart/render/zm-f26c07ef-18b2-41a8-a005-b8fc3fa7fee6?data1=1.799,0.972,0.718,0.547,0.327,0.273,0.208,0.195,0.181,0.135,&labels=deposit_type,agent,country,total_of_special_requests,lead_time,customer_type,required_car_parking_spaces,previous_cancellations,arrival_date_week_number,booking_changes"
-            };
-
-            // "Expand" the template - this generates the final Adaptive Card payload
-                string cardJson = template.Expand(myData);
-
-            var cardResourcePath = "CoreBot.Cards.welcomeCard_new.json";
-
-            using (var stream = GetType().Assembly.GetManifestResourceStream(cardResourcePath))
-            {
-                using (var reader = new StreamReader(stream))
-                {
-                    var adaptiveCard = reader.ReadToEnd();
-                    return new Attachment()
-                    {
-                        ContentType = "application/vnd.microsoft.card.adaptive",
-                        Content = JsonConvert.DeserializeObject(adaptiveCard),
-                    };
-                }
-            }
-        }
-      
+    
     }
 }
