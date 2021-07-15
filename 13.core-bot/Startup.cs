@@ -57,6 +57,8 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<SaveDialog>();
             services.AddSingleton<SimilarBookingsDialog>();
             services.AddSingleton<FeatureImportanceHelpDialog>();
+            services.AddSingleton<LocalExplanationDialog>();
+            services.AddSingleton<UnexperiencedDialog>();
 
             // The MainDialog that will be run by the bot.
             services.AddSingleton<MainDialog>();

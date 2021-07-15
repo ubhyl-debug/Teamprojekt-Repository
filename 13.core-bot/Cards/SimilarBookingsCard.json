@@ -86,9 +86,6 @@
                             },
                             "items": [
                                 {
-                                    "type": "TextBlock",
-                                    "wrap": true,
-                                    "text": "73636"
                                 }
                             ]
                         }

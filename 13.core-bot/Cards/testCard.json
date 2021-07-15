@@ -29,7 +29,7 @@
                         {
                             "type": "TextBlock",
                             "weight": "Bolder",
-                            "text": "Hi! My name is Hannes. I am your virtual assistent and I'm here to explain the AI to you. ",
+                            "text": "Hi! My name is Hannes. I am your virtual assistent and I predicted a cancellation risk of ",
                             "wrap": true,
                             "horizontalAlignment": "Center"
                         }
@@ -39,35 +39,18 @@
             ]
         },
         {
-            "type": "Container"
-        },
-        {
-            "type": "Container",
-            "items": [
-                {
-                    "type": "Container"
-                }
-            ]
-        },
-        {
-            "type": "Container"
-        },
-        {
-            "type": "Container"
-        },
-        {
-            "type": "TextBlock",
-            "wrap": true,
-            "text": "My Prediction for your selected booking is:",
-            "horizontalAlignment": "Center",
-            "weight": "Bolder"
-        },
-        {
             "type": "TextBlock",
             "wrap": true,
             "horizontalAlignment": "Center",
             "text": "${prediction}",
             "size": "Large"
+        },
+        {
+            "type": "TextBlock",
+            "wrap": true,
+            "text": "How did I do it? Let me explain it to you.",
+            "horizontalAlignment": "Center",
+            "weight": "Bolder"
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",

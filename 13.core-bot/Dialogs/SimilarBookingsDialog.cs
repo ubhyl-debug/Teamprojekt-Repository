@@ -57,7 +57,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
 
             var jObject = await BOT_Api.getJson("/explanation/similarbookings");
-            Console.WriteLine("****************Countof" + (string) jObject["count_of_similar_bookings"]);
+            
             var myData = new
             {
 

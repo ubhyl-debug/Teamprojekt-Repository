@@ -35,11 +35,13 @@ namespace Microsoft.BotBuilderSamples.Bots
                 {   
                      var jObject = await BOT_Api.getJson("/explanation/getlastprediction");
 
+                     float prediction_num = (float)jObject["booking"][0]["booking_normal"]["prediction_proba"] * 100;
+
                 Console.WriteLine("TTTTTTTTTT" + jObject["booking"][0]["booking_normal"]["prediction_proba"]);
             var myData = new
             {
 
-                prediction = jObject["booking"][0]["booking_normal"]["prediction_proba"].ToString()
+                prediction = prediction_num.ToString() + "%"
             };
                     var welcomeCard = CardCreator.getCardAttachment(myData, "CoreBot.Cards.testCard.json");
                     

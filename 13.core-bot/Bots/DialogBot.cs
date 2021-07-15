@@ -39,14 +39,12 @@ namespace Microsoft.BotBuilderSamples.Bots
         {   
             var activity = turnContext.Activity;
 
-            Console.WriteLine("******************THIS IS A TURN***************");
-            Console.WriteLine(turnContext);
             //Added for Choice in Adaptive Cards
 
             if (string.IsNullOrWhiteSpace(activity.Text) && activity.Value != null)
             {
                 activity.Text = JsonConvert.SerializeObject(activity.Value);
-            }
+            } 
             await base.OnTurnAsync(turnContext, cancellationToken);
 
             // Save any state changes that might have occurred during the turn.
@@ -57,8 +55,6 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             Logger.LogInformation("Running dialog with Message Activity.");
-            Console.WriteLine("******************THIS IS A MESSAGE***************");
-            Console.WriteLine(turnContext);
             // Run the Dialog with the new message Activity.
             await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
         }

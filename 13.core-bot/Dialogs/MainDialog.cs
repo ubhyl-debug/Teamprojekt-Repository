@@ -29,7 +29,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         public MainDialog(LuisXaiRecognizer luisRecognizer, BookingDialog bookingDialog, FeatureImportanceDialog featureImportanceDialog, DirectionOfInfluenceNumDialog directionOfInfluenceNumDialog,
         DirectionOfInfluenceCatDialog directionOfInfluenceCatDialog, LocalWaterfallExplDialog localWaterfallExplDialog, ILogger<MainDialog> logger, 
         ConditionalShapDialog conditionalShapDialog, WhatIfDialog whatIfDialog, SimilarBookingsDialog similarBookingsDialog, FeatureImportanceHelpDialog featureImportanceHelpDialog,
-        FeatureImportanceDialog1 featureImportanceDialog1, SaveDialog saveDialog)
+        FeatureImportanceDialog1 featureImportanceDialog1, SaveDialog saveDialog, LocalExplanationDialog localExplanationDialog, UnexperiencedDialog unexperiencedDialog)
             : base(nameof(MainDialog))
         {
             _luisRecognizer = luisRecognizer;
@@ -47,7 +47,9 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             AddDialog(whatIfDialog);
             AddDialog(saveDialog);
             AddDialog(similarBookingsDialog);
+            AddDialog(localExplanationDialog);
             AddDialog(featureImportanceHelpDialog);
+            AddDialog(unexperiencedDialog);
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {
                 UserExperienceAsync,
@@ -96,7 +98,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             var choice = ((FoundChoice)stepContext?.Result)?.Value;
             if (choice == "Unexperienced")  {
                 Console.WriteLine("************Unexperienced Dialog started.....********************");
-            return await stepContext.BeginDialogAsync(nameof(SimilarBookingsDialog), "unexperienced", cancellationToken);
+            return await stepContext.BeginDialogAsync(nameof(UnexperiencedDialog), "unexperienced", cancellationToken);
             }
            
             if (stepContext.Options == null) { 
@@ -146,12 +148,18 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                     };
 
                     return await stepContext.BeginDialogAsync(nameof(FeatureImportanceDialog1), featureImportanceDetails, cancellationToken);
+                
+                case XaiInteraction.Intent.LocalExplanation:
+                    return await stepContext.BeginDialogAsync(nameof(LocalExplanationDialog), null, cancellationToken);
+                    //User wants local explanation --> show waterfall plt
+
+
 
                 default:
                     var didntUnderstandMessageText = $"Sorry, I didn't get that. Please try asking in a different way (intent was {luisResult2.TopIntent().intent})";
                     var didntUnderstandMessage = MessageFactory.Text(didntUnderstandMessageText, didntUnderstandMessageText, InputHints.IgnoringInput);
                     await stepContext.Context.SendActivityAsync(didntUnderstandMessage, cancellationToken);
-                    return await stepContext.NextAsync(null);
+                    return await stepContext.NextAsync("NO_INTENT");
  
 
             }

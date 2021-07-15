@@ -47,72 +47,7 @@
                     "size": "Small"
                 }
             ],
-            
             "style": "default"
-        },
-        {
-            "type": "ColumnSet",
-            "columns": [
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "ActionSet",
-                            "actions": [
-                                {
-                                    "type": "Action.Submit",
-                                    "data": {"title": "${title}",
-                                            "action": "HELP",
-                                            "dialog": "{nameOfDialog}"
-                                            },
-                                    "iconUrl": "https://image.flaticon.com/icons/png/512/1479/1479648.png"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "ActionSet",
-                            "actions": [
-                                {
-                                    "type": "Action.Submit",
-                                    "data": {
-                                        "action": "SAVE",
-                                        "title": "${title}",
-                                        "text": "${textexpl}",
-                                        "url": "${url}"
-                                    },
-                                    "iconUrl": "https://pics.freeicons.io/uploads/icons/png/2725159511543238876-512.png"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "Column",
-                    "width": "stretch",
-                    "items": [
-                        {
-                            "type": "ActionSet",
-                            "actions": [
-                                {
-                                    "type": "Action.Submit",
-                                    "data": {
-                                        "action": "NEXT",
-                                        "title": "${title}"
-                                    },
-                                    "iconUrl": "https://pics.freeicons.io/uploads/icons/png/15574942051535694868-512.png"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
         }
     ],
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",

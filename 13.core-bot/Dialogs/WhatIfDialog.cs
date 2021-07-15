@@ -54,11 +54,9 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
         private async Task<DialogTurnResult> GetUserInputAsync (WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (stepContext.Options == "unexperienced") {
-                await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("", inputHint: InputHints.IgnoringInput), cancellationToken);
-            }
-
+            
+            await stepContext.Context.SendActivityAsync(
+            MessageFactory.Text("Alright now it is your turn… Try it out and change one or more features from the current booking (to the other features the default value from the current booking is assigned).", inputHint: InputHints.IgnoringInput), cancellationToken);
             
 
             var templateJson="";
@@ -73,18 +71,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
 
-           /** var myData = new
-            {
-
-                Title= "Direction of Influence (categorical Features)",
-                Url= (string) jObject["url"],
-                Save_data = "Direction of Infleunce (categorical Features)",
-                Textexpl = "The plot shows ....."
-
-            };
-
-            // "Expand" the template - this generates the final Adaptive Card payload
-            string cardJson = template.Expand(myData);*/
 
             var cardAttachment = new Attachment()
             {
@@ -111,6 +97,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         private async Task<DialogTurnResult> ShowResultStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var jObject1 = BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/whatif");
+
+            await stepContext.Context.SendActivityAsync(
+            MessageFactory.Text("Now, have a look at the specific difference and compare the old prediction with the new one!"));   
+
+ 
 
             //Send prediction card
             var myData1 = new

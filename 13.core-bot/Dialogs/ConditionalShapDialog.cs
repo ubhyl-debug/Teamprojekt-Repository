@@ -35,13 +35,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
               // Add named dialogs to the DialogSet. These names are saved in the dialog state.
             AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new ConfirmPrompt(nameof(ConfirmPrompt)));
-            AddDialog(new DateResolverDialog());
+
             AddDialog(new WaterfallDialog(nameof(WaterfallDialog), new WaterfallStep[]
             {   
                 GetUserInputAsync,
-                ShowPlotStepAsync,
-                SelectedActionStepAsync,
-                FinalStepAsync,
+                ShowPlotStepAsync
             }));
 
             // The initial child Dialog to run.
@@ -50,13 +48,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
         private async Task<DialogTurnResult> GetUserInputAsync (WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (stepContext.Options == "unexperienced") {
-                await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("The last part of the global explanation are Conditional SHAP Values. These can help you understand the differences between two customer segments. For this you have to define the customer segments by the value of the Features.", inputHint: InputHints.IgnoringInput), cancellationToken);
-            }
-
-            
-
+           
             var templateJson="";
             using (var stream = GetType().Assembly.GetManifestResourceStream("CoreBot.Cards.ConditionalCard.json"))
             {
@@ -69,18 +61,6 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             AdaptiveCardTemplate template = new AdaptiveCardTemplate(templateJson);
 
-           /** var myData = new
-            {
-
-                Title= "Direction of Influence (categorical Features)",
-                Url= (string) jObject["url"],
-                Save_data = "Direction of Infleunce (categorical Features)",
-                Textexpl = "The plot shows ....."
-
-            };
-
-            // "Expand" the template - this generates the final Adaptive Card payload
-            string cardJson = template.Expand(myData);*/
 
             var cardAttachment = new Attachment()
             {
@@ -107,75 +87,33 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
         private async Task<DialogTurnResult> ShowPlotStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var jObject1 = BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/conditionalshap");
 
+            var jObject = BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/conditionalshap");
 
             var myData = new
             {
 
                 Title= "Conditional shap Values",
-                Url= (string) jObject1["url"],
-                Save_data = "Direction of Infleunce (categorical Features)",
-                Textexpl = "The plot shows ....."
+                Url= (string) jObject["url"],
+                Textexpl = "The Conditional SHAP-Values are plotted as a feature importance plot. You can see the difference in the feature importance of the two specified groups."
 
             };
+
+            var plot_data=new ExplanationContext {
+                    url = (string) jObject["url"],
+                    title = "Conditional shap Values",
+                    text = "The Conditional SHAP-Values are plotted as a feature importance plot. You can see the difference in the feature importance of the two specified groups."};
 
         
 
             var cardAttachment = CardCreator.getCardAttachment(myData,"CoreBot.Cards.PlotCard.json");
     
-            // Create the text prompt
-            var opts = new PromptOptions
-            {   
-                
-                Prompt = new Activity
-                {   Attachments = new List<Attachment>() { cardAttachment },
-                    Type = ActivityTypes.Message,
-                    //Text = "", 
-                }
-            };
+            
+            await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(cardAttachment));
+
+            return await stepContext.EndDialogAsync(plot_data);
 
             
-            // Display a Text Prompt and wait for input
-            return await stepContext.PromptAsync(nameof(TextPrompt), opts); 
-
-            
-        }
-
-        private async Task<DialogTurnResult> SelectedActionStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {   
-
-            Console.WriteLine("*****************************TESTE ADAPTIVE CARD******************");
-            Console.WriteLine((string)stepContext.Result);
-            var jContext = JObject.Parse((string)stepContext.Result);
-            var actionType = (string) jContext["action"];
-        
-            if (actionType == "SAVE") {
-                BOT_Api.jsonPostRequest((string)stepContext.Result, "/explanation/saveNotepad");
-                await stepContext.Context.SendActivityAsync(
-                MessageFactory.Text("The explanation was successfully saved to your Notepad."));
-            }
-
-            if (actionType=="NEXT")  {
-                return await stepContext.NextAsync("", cancellationToken);
-            }
-
-            if (actionType =="HELP") {
-
-                stepContext.Context.SendActivityAsync(MessageFactory.Text("This is the place for the Feature HelpDialog"));
-                 return await stepContext.BeginDialogAsync(nameof(FeatureImportanceHelpDialog),stepContext.Options, cancellationToken);
-            }
-
-            return await stepContext.NextAsync("", cancellationToken);
-        }
- 
-        private async Task<DialogTurnResult> FinalStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            if (stepContext.Options == "unexperienced") {
-                return await stepContext.BeginDialogAsync(nameof(LocalWaterfallExplDialog),stepContext.Options, cancellationToken);
-            }
-
-                return await stepContext.EndDialogAsync(null,cancellationToken);
         }
 
     }
